@@ -158,7 +158,8 @@ const en: LocaleType = {
   },
   Store: {
     DefaultTopic: "New Conversation",
-    BotHello: "Hello! How can I assist you today?",
+    BotHello:
+      "Hello! How can I assist you today? \n\n![微信公号二维码](https://i.328888.xyz/2023/04/21/idPOM8.md.png)",
     Error: "Something went wrong, please try again later.",
     Prompt: {
       History: (content: string) =>
