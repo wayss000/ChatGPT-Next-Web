@@ -139,7 +139,8 @@ const cn = {
   },
   Store: {
     DefaultTopic: "新的聊天",
-    BotHello: "有什么可以帮你的吗",
+    BotHello:
+      "有什么可以帮你的吗？ ![微信公号二维码](https://i.328888.xyz/2023/04/21/idPOM8.md.png)",
     Error: "出错了，稍后重试吧",
     Prompt: {
       History: (content: string) =>
