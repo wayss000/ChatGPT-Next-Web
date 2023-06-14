@@ -4,7 +4,7 @@ const cn = {
   WIP: "该功能仍在开发中……",
   Error: {
     Unauthorized:
-      "现在是未授权状态，请点击左下角[设置](/#/settings)按钮输入访问密码。\n\n![微信公号二维码](https://i.328888.xyz/2023/04/21/idPOM8.md.png)",
+      "现在是未授权状态，请点击左下角[设置](/#/settings)按钮输入访问密码。\n\n![微信公号二维码](https://gitee.com/wayss/public-img/raw/master/Build_AI_Assistant.jpeg)",
   },
   ChatItem: {
     ChatItemCount: (count: number) => `${count} 条对话`,
@@ -78,6 +78,7 @@ const cn = {
         tr: "Türkçe",
         jp: "日本語",
         de: "Deutsch",
+        vi: "Vietnamese",
       },
     },
     Avatar: "头像",
