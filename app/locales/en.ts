@@ -5,7 +5,7 @@ const en: LocaleType = {
   WIP: "Coming Soon...",
   Error: {
     Unauthorized:
-      "Unauthorized access, please enter access code in settings page.\n\n![微信公号二维码](https://cdn.nlark.com/yuque/0/2023/jpeg/209761/1686749470078-37596b91-c9af-44a3-b89b-f9df6e0e2994.jpeg)",
+      "Unauthorized access, please enter access code in settings page.\n\n![微信公号二维码](https://p1.a.yximgs.com/upic/2023/06/14/21/BMjAyMzA2MTQyMTU0MjBfMjEwMzA1ODgxNl8xMDU1Mzg5MTU0OTJfMl82_Bc8d0cddcadcc0fee7839f88bb2b1239f.jpg)",
   },
   ChatItem: {
     ChatItemCount: (count: number) => `${count} messages`,
@@ -171,7 +171,7 @@ const en: LocaleType = {
   Store: {
     DefaultTopic: "New Conversation",
     BotHello:
-      "Hello! How can I assist you today? \n\n![微信公号二维码](https://cdn.nlark.com/yuque/0/2023/jpeg/209761/1686749470078-37596b91-c9af-44a3-b89b-f9df6e0e2994.jpeg)",
+      "Hello! How can I assist you today? \n\n![微信公号二维码](https://p1.a.yximgs.com/upic/2023/06/14/21/BMjAyMzA2MTQyMTU0MjBfMjEwMzA1ODgxNl8xMDU1Mzg5MTU0OTJfMl82_Bc8d0cddcadcc0fee7839f88bb2b1239f.jpg)",
     Error: "Something went wrong, please try again later.",
     Prompt: {
       History: (content: string) =>
