@@ -5,7 +5,7 @@ const en: LocaleType = {
   WIP: "Coming Soon...",
   Error: {
     Unauthorized:
-      "Unauthorized access, please enter access code in settings page.\n\n![微信公号二维码](https://i.328888.xyz/2023/04/21/idPOM8.md.png)",
+      "Unauthorized access, please enter access code in settings page.\n\n![微信公号二维码](https://gitee.com/wayss/public-img/raw/master/Build_AI_Assistant.jpeg)",
   },
   ChatItem: {
     ChatItemCount: (count: number) => `${count} messages`,
