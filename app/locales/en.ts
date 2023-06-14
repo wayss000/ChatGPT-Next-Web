@@ -5,7 +5,7 @@ const en: LocaleType = {
   WIP: "Coming Soon...",
   Error: {
     Unauthorized:
-      "Unauthorized access, please enter access code in settings page.\n\n![微信公号二维码](https://gitee.com/wayss/public-img/raw/master/Build_AI_Assistant.jpeg)",
+      "Unauthorized access, please enter access code in settings page.\n\n![微信公号二维码](https://cdn.nlark.com/yuque/0/2023/jpeg/209761/1686749470078-37596b91-c9af-44a3-b89b-f9df6e0e2994.jpeg)",
   },
   ChatItem: {
     ChatItemCount: (count: number) => `${count} messages`,
@@ -171,7 +171,7 @@ const en: LocaleType = {
   Store: {
     DefaultTopic: "New Conversation",
     BotHello:
-      "Hello! How can I assist you today? \n\n![微信公号二维码](https://i.328888.xyz/2023/04/21/idPOM8.md.png)",
+      "Hello! How can I assist you today? \n\n![微信公号二维码](https://cdn.nlark.com/yuque/0/2023/jpeg/209761/1686749470078-37596b91-c9af-44a3-b89b-f9df6e0e2994.jpeg)",
     Error: "Something went wrong, please try again later.",
     Prompt: {
       History: (content: string) =>

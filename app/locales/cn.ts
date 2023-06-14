@@ -4,7 +4,7 @@ const cn = {
   WIP: "该功能仍在开发中……",
   Error: {
     Unauthorized:
-      "现在是未授权状态，请点击左下角[设置](/#/settings)按钮输入访问密码。\n\n![微信公号二维码](https://gitee.com/wayss/public-img/raw/master/Build_AI_Assistant.jpeg)",
+      "现在是未授权状态，请点击左下角[设置](/#/settings)按钮输入访问密码。\n\n![微信公号二维码](https://cdn.nlark.com/yuque/0/2023/jpeg/209761/1686749470078-37596b91-c9af-44a3-b89b-f9df6e0e2994.jpeg)",
   },
   ChatItem: {
     ChatItemCount: (count: number) => `${count} 条对话`,
@@ -169,7 +169,7 @@ const cn = {
   Store: {
     DefaultTopic: "新的聊天",
     BotHello:
-      "有什么可以帮你的吗？\n\n![微信公号二维码](https://i.328888.xyz/2023/04/21/idPOM8.md.png)",
+      "有什么可以帮你的吗？\n\n![微信公号二维码](https://cdn.nlark.com/yuque/0/2023/jpeg/209761/1686749470078-37596b91-c9af-44a3-b89b-f9df6e0e2994.jpeg)",
     Error: "出错了，稍后重试吧",
     Prompt: {
       History: (content: string) =>
