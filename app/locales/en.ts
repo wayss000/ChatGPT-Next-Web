@@ -1,11 +1,15 @@
 import { SubmitKey } from "../store/config";
 import type { LocaleType } from "./index";
 
+const wx_pic_url =
+  "https://p2.a.yximgs.com/upic/2023/06/15/16/BMjAyMzA2MTUxNjI5MzlfMjEwMzA1ODgxNl8xMDU1ODQzNDQ2MTJfMl82_Bbbf4223a3cc9af4d26def37ebca45bbf.jpg";
 const en: LocaleType = {
   WIP: "Coming Soon...",
   Error: {
     Unauthorized:
-      "Unauthorized access, please enter access code in settings page.\n\n![微信公号二维码](https://p1.a.yximgs.com/upic/2023/06/14/21/BMjAyMzA2MTQyMTU0MjBfMjEwMzA1ODgxNl8xMDU1Mzg5MTU0OTJfMl82_Bc8d0cddcadcc0fee7839f88bb2b1239f.jpg)",
+      "Unauthorized access, please enter access code in settings page.\n\n![微信公号二维码](" +
+      wx_pic_url +
+      ")",
   },
   ChatItem: {
     ChatItemCount: (count: number) => `${count} messages`,
@@ -171,7 +175,9 @@ const en: LocaleType = {
   Store: {
     DefaultTopic: "New Conversation",
     BotHello:
-      "Hello! How can I assist you today? \n\n![微信公号二维码](https://p1.a.yximgs.com/upic/2023/06/14/21/BMjAyMzA2MTQyMTU0MjBfMjEwMzA1ODgxNl8xMDU1Mzg5MTU0OTJfMl82_Bc8d0cddcadcc0fee7839f88bb2b1239f.jpg)",
+      "Hello! How can I assist you today? \n\n![微信公号二维码](" +
+      wx_pic_url +
+      ")",
     Error: "Something went wrong, please try again later.",
     Prompt: {
       History: (content: string) =>

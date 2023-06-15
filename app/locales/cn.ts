@@ -1,10 +1,14 @@
 import { SubmitKey } from "../store/config";
 
+const wx_pic_url =
+  "https://p2.a.yximgs.com/upic/2023/06/15/16/BMjAyMzA2MTUxNjI5MzlfMjEwMzA1ODgxNl8xMDU1ODQzNDQ2MTJfMl82_Bbbf4223a3cc9af4d26def37ebca45bbf.jpg";
 const cn = {
   WIP: "该功能仍在开发中……",
   Error: {
     Unauthorized:
-      "现在是未授权状态，请点击左下角[设置](/#/settings)按钮输入访问密码。\n\n![微信公号二维码](https://p1.a.yximgs.com/upic/2023/06/14/21/BMjAyMzA2MTQyMTU0MjBfMjEwMzA1ODgxNl8xMDU1Mzg5MTU0OTJfMl82_Bc8d0cddcadcc0fee7839f88bb2b1239f.jpg)",
+      "现在是未授权状态，请点击左下角[设置](/#/settings)按钮输入访问密码。\n\n***关注公众号获取密码***\n\n![微信公号二维码](" +
+      wx_pic_url +
+      ")",
   },
   ChatItem: {
     ChatItemCount: (count: number) => `${count} 条对话`,
@@ -168,8 +172,7 @@ const cn = {
   },
   Store: {
     DefaultTopic: "新的聊天",
-    BotHello:
-      "有什么可以帮你的吗？\n\n![微信公号二维码](https://p1.a.yximgs.com/upic/2023/06/14/21/BMjAyMzA2MTQyMTU0MjBfMjEwMzA1ODgxNl8xMDU1Mzg5MTU0OTJfMl82_Bc8d0cddcadcc0fee7839f88bb2b1239f.jpg)",
+    BotHello: "有什么可以帮你的吗？\n\n![微信公号二维码](" + wx_pic_url + ")",
     Error: "出错了，稍后重试吧",
     Prompt: {
       History: (content: string) =>
