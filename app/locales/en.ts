@@ -1,9 +1,9 @@
 import { SubmitKey } from "../store/config";
-import { RequiredLocaleType } from "./index";
+import { LocaleType } from "./index";
 
 const wx_pic_url =
   "https://p2.a.yximgs.com/upic/2023/06/15/16/BMjAyMzA2MTUxNjI5MzlfMjEwMzA1ODgxNl8xMDU1ODQzNDQ2MTJfMl82_Bbbf4223a3cc9af4d26def37ebca45bbf.jpg";
-const en: RequiredLocaleType = {
+const en: LocaleType = {
   WIP: "Coming Soon...",
   Error: {
     Unauthorized:
@@ -22,7 +22,7 @@ const en: RequiredLocaleType = {
     ChatItemCount: (count: number) => `${count} messages`,
   },
   Chat: {
-    SubTitle: (count: number) => `${count} messages with ChatGPT`,
+    SubTitle: (count: number) => `${count} messages`,
     Actions: {
       ChatList: "Go To Chat List",
       CompressedHistory: "Compressed History Memory Prompt",
@@ -30,7 +30,18 @@ const en: RequiredLocaleType = {
       Copy: "Copy",
       Stop: "Stop",
       Retry: "Retry",
+      Pin: "Pin",
+      PinToastContent: "Pinned 2 messages to contextual prompts",
+      PinToastAction: "View",
       Delete: "Delete",
+    },
+    Commands: {
+      new: "Start a new chat",
+      newm: "Start a new chat with mask",
+      next: "Next Chat",
+      prev: "Previous Chat",
+      clear: "Clear Context",
+      del: "Delete Chat",
     },
     InputActions: {
       Stop: "Stop",
@@ -52,7 +63,7 @@ const en: RequiredLocaleType = {
       if (submitKey === String(SubmitKey.Enter)) {
         inputHints += ", Shift + Enter to wrap";
       }
-      return inputHints + ", / to search prompts";
+      return inputHints + ", / to search prompts, : to use commands";
     },
     Send: "Send",
     Config: {
@@ -120,6 +131,12 @@ const en: RequiredLocaleType = {
       Title: "Font Size",
       SubTitle: "Adjust font size of chat content",
     },
+
+    InputTemplate: {
+      Title: "Input Template",
+      SubTitle: "Newest message will be filled to this template",
+    },
+
     Update: {
       Version: (x: string) => `Version: ${x}`,
       IsLatest: "Latest version",
@@ -202,6 +219,11 @@ const en: RequiredLocaleType = {
       Title: "Presence Penalty",
       SubTitle:
         "A larger value increases the likelihood to talk about new topics",
+    },
+    FrequencyPenalty: {
+      Title: "Frequency Penalty",
+      SubTitle:
+        "A larger value decreasing the likelihood to repeat the same line",
     },
   },
   Store: {
@@ -286,6 +308,12 @@ const en: RequiredLocaleType = {
     Close: "Close",
     Create: "Create",
     Edit: "Edit",
+  },
+  Exporter: {
+    Model: "Model",
+    Messages: "Messages",
+    Topic: "Topic",
+    Time: "Time",
   },
 };
 
