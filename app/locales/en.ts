@@ -1,19 +1,23 @@
+import { getClientConfig } from "../config/client";
 import { SubmitKey } from "../store/config";
 import { LocaleType } from "./index";
 
 const wx_pic_url =
   "https://p2.a.yximgs.com/upic/2023/06/15/16/BMjAyMzA2MTUxNjI5MzlfMjEwMzA1ODgxNl8xMDU1ODQzNDQ2MTJfMl82_Bbbf4223a3cc9af4d26def37ebca45bbf.jpg";
+// if you are adding a new translation, please use PartialLocaleType instead of LocaleType
+
+const isApp = !!getClientConfig()?.isApp;
 const en: LocaleType = {
   WIP: "Coming Soon...",
   Error: {
-    Unauthorized:
-      "Unauthorized access, please enter access code in [auth](/#/auth) page. \n\n![微信公号二维码](" +
-      wx_pic_url +
-      ")",
+    Unauthorized: isApp
+      ? "Invalid API Key, please check it in [Settings](/#/settings) page."
+      : "Unauthorized access, please enter access code in [auth](/#/auth) page, or enter your OpenAI API Key.",
   },
   Auth: {
     Title: "Need Access Code",
     Tips: "Please enter access code below",
+    SubTips: "Or enter your OpenAI or Google API Key",
     Input: "access code",
     Confirm: "Confirm",
     Later: "Later",
@@ -23,6 +27,13 @@ const en: LocaleType = {
   },
   Chat: {
     SubTitle: (count: number) => `${count} messages`,
+    EditMessage: {
+      Title: "Edit All Messages",
+      Topic: {
+        Title: "Topic",
+        SubTitle: "Change the current topic",
+      },
+    },
     Actions: {
       ChatList: "Go To Chat List",
       CompressedHistory: "Compressed History Memory Prompt",
@@ -31,10 +42,11 @@ const en: LocaleType = {
       Stop: "Stop",
       Retry: "Retry",
       Pin: "Pin",
-      PinToastContent: "Pinned 2 messages to contextual prompts",
+      PinToastContent: "Pinned 1 messages to contextual prompts",
       PinToastAction: "View",
       Delete: "Delete",
       Edit: "Edit",
+      FullScreen: "FullScreen",
     },
     Commands: {
       new: "Start a new chat",
@@ -56,6 +68,7 @@ const en: LocaleType = {
       Masks: "Masks",
       Clear: "Clear Context",
       Settings: "Settings",
+      UploadImage: "Upload Images",
     },
     Rename: "Rename Chat",
     Typing: "Typing…",
@@ -71,6 +84,7 @@ const en: LocaleType = {
       Reset: "Reset to Default",
       SaveAs: "Save as Mask",
     },
+    IsContext: "Contextual Prompt",
   },
   Export: {
     Title: "Export Messages",
@@ -90,6 +104,14 @@ const en: LocaleType = {
     Steps: {
       Select: "Select",
       Preview: "Preview",
+    },
+    Image: {
+      Toast: "Capturing Image...",
+      Modal: "Long press or right click to save image",
+    },
+    Artifacts: {
+      Title: "Share Artifacts",
+      Error: "Share Error",
     },
   },
   Select: {
@@ -116,6 +138,7 @@ const en: LocaleType = {
   Settings: {
     Title: "Settings",
     SubTitle: "All Settings",
+    ShowPassword: "ShowPassword",
     Danger: {
       Reset: {
         Title: "Reset All Settings",
@@ -139,7 +162,16 @@ const en: LocaleType = {
       Title: "Font Size",
       SubTitle: "Adjust font size of chat content",
     },
-
+    FontFamily: {
+      Title: "Chat Font Family",
+      SubTitle:
+        "Font Family of the chat content, leave empty to apply global default font",
+      Placeholder: "Font Family Name",
+    },
+    InjectSystemPrompts: {
+      Title: "Inject System Prompts",
+      SubTitle: "Inject a global system prompt for every request",
+    },
     InputTemplate: {
       Title: "Input Template",
       SubTitle: "Newest message will be filled to this template",
@@ -160,9 +192,63 @@ const en: LocaleType = {
       Title: "Send Preview Bubble",
       SubTitle: "Preview markdown in bubble",
     },
+    AutoGenerateTitle: {
+      Title: "Auto Generate Title",
+      SubTitle: "Generate a suitable title based on the conversation content",
+    },
+    Sync: {
+      CloudState: "Last Update",
+      NotSyncYet: "Not sync yet",
+      Success: "Sync Success",
+      Fail: "Sync Fail",
+
+      Config: {
+        Modal: {
+          Title: "Config Sync",
+          Check: "Check Connection",
+        },
+        SyncType: {
+          Title: "Sync Type",
+          SubTitle: "Choose your favorite sync service",
+        },
+        Proxy: {
+          Title: "Enable CORS Proxy",
+          SubTitle: "Enable a proxy to avoid cross-origin restrictions",
+        },
+        ProxyUrl: {
+          Title: "Proxy Endpoint",
+          SubTitle:
+            "Only applicable to the built-in CORS proxy for this project",
+        },
+
+        WebDav: {
+          Endpoint: "WebDAV Endpoint",
+          UserName: "User Name",
+          Password: "Password",
+        },
+
+        UpStash: {
+          Endpoint: "UpStash Redis REST Url",
+          UserName: "Backup Name",
+          Password: "UpStash Redis REST Token",
+        },
+      },
+
+      LocalState: "Local Data",
+      Overview: (overview: any) => {
+        return `${overview.chat} chats，${overview.message} messages，${overview.prompt} prompts，${overview.mask} masks`;
+      },
+      ImportFailed: "Failed to import from file",
+    },
     Mask: {
-      Title: "Mask Splash Screen",
-      SubTitle: "Show a mask splash screen before starting new chat",
+      Splash: {
+        Title: "Mask Splash Screen",
+        SubTitle: "Show a mask splash screen before starting new chat",
+      },
+      Builtin: {
+        Title: "Hide Builtin Masks",
+        SubTitle: "Hide builtin masks in mask list",
+      },
     },
     Prompt: {
       Disable: {
@@ -191,11 +277,7 @@ const en: LocaleType = {
       SubTitle:
         "Will compress if uncompressed messages length exceeds the value",
     },
-    Token: {
-      Title: "API Key",
-      SubTitle: "Use your key to ignore access code limit",
-      Placeholder: "OpenAI API Key",
-    },
+
     Usage: {
       Title: "Account Balance",
       SubTitle(used: any, total: any) {
@@ -205,15 +287,186 @@ const en: LocaleType = {
       Check: "Check",
       NoAccess: "Enter API Key to check balance",
     },
-    AccessCode: {
-      Title: "Access Code",
-      SubTitle: "Access control enabled",
-      Placeholder: "Need Access Code",
+    Access: {
+      AccessCode: {
+        Title: "Access Code",
+        SubTitle: "Access control Enabled",
+        Placeholder: "Enter Code",
+      },
+      CustomEndpoint: {
+        Title: "Custom Endpoint",
+        SubTitle: "Use custom Azure or OpenAI service",
+      },
+      Provider: {
+        Title: "Model Provider",
+        SubTitle: "Select Azure or OpenAI",
+      },
+      OpenAI: {
+        ApiKey: {
+          Title: "OpenAI API Key",
+          SubTitle: "User custom OpenAI Api Key",
+          Placeholder: "sk-xxx",
+        },
+
+        Endpoint: {
+          Title: "OpenAI Endpoint",
+          SubTitle: "Must start with http(s):// or use /api/openai as default",
+        },
+      },
+      Azure: {
+        ApiKey: {
+          Title: "Azure Api Key",
+          SubTitle: "Check your api key from Azure console",
+          Placeholder: "Azure Api Key",
+        },
+
+        Endpoint: {
+          Title: "Azure Endpoint",
+          SubTitle: "Example: ",
+        },
+
+        ApiVerion: {
+          Title: "Azure Api Version",
+          SubTitle: "Check your api version from azure console",
+        },
+      },
+      Anthropic: {
+        ApiKey: {
+          Title: "Anthropic API Key",
+          SubTitle:
+            "Use a custom Anthropic Key to bypass password access restrictions",
+          Placeholder: "Anthropic API Key",
+        },
+
+        Endpoint: {
+          Title: "Endpoint Address",
+          SubTitle: "Example: ",
+        },
+
+        ApiVerion: {
+          Title: "API Version (claude api version)",
+          SubTitle: "Select and input a specific API version",
+        },
+      },
+      Baidu: {
+        ApiKey: {
+          Title: "Baidu API Key",
+          SubTitle: "Use a custom Baidu API Key",
+          Placeholder: "Baidu API Key",
+        },
+        SecretKey: {
+          Title: "Baidu Secret Key",
+          SubTitle: "Use a custom Baidu Secret Key",
+          Placeholder: "Baidu Secret Key",
+        },
+        Endpoint: {
+          Title: "Endpoint Address",
+          SubTitle: "not supported, configure in .env",
+        },
+      },
+      Tencent: {
+        ApiKey: {
+          Title: "Tencent API Key",
+          SubTitle: "Use a custom Tencent API Key",
+          Placeholder: "Tencent API Key",
+        },
+        SecretKey: {
+          Title: "Tencent Secret Key",
+          SubTitle: "Use a custom Tencent Secret Key",
+          Placeholder: "Tencent Secret Key",
+        },
+        Endpoint: {
+          Title: "Endpoint Address",
+          SubTitle: "not supported, configure in .env",
+        },
+      },
+      ByteDance: {
+        ApiKey: {
+          Title: "ByteDance API Key",
+          SubTitle: "Use a custom ByteDance API Key",
+          Placeholder: "ByteDance API Key",
+        },
+        Endpoint: {
+          Title: "Endpoint Address",
+          SubTitle: "Example: ",
+        },
+      },
+      Alibaba: {
+        ApiKey: {
+          Title: "Alibaba API Key",
+          SubTitle: "Use a custom Alibaba Cloud API Key",
+          Placeholder: "Alibaba Cloud API Key",
+        },
+        Endpoint: {
+          Title: "Endpoint Address",
+          SubTitle: "Example: ",
+        },
+      },
+      Moonshot: {
+        ApiKey: {
+          Title: "Moonshot API Key",
+          SubTitle: "Use a custom Moonshot API Key",
+          Placeholder: "Moonshot API Key",
+        },
+        Endpoint: {
+          Title: "Endpoint Address",
+          SubTitle: "Example: ",
+        },
+      },
+      Stability: {
+        ApiKey: {
+          Title: "Stability API Key",
+          SubTitle: "Use a custom Stability API Key",
+          Placeholder: "Stability API Key",
+        },
+        Endpoint: {
+          Title: "Endpoint Address",
+          SubTitle: "Example: ",
+        },
+      },
+      Iflytek: {
+        ApiKey: {
+          Title: "Iflytek API Key",
+          SubTitle: "Use a Iflytek API Key",
+          Placeholder: "Iflytek API Key",
+        },
+        ApiSecret: {
+          Title: "Iflytek API Secret",
+          SubTitle: "Use a Iflytek API Secret",
+          Placeholder: "Iflytek API Secret",
+        },
+        Endpoint: {
+          Title: "Endpoint Address",
+          SubTitle: "Example: ",
+        },
+      },
+      CustomModel: {
+        Title: "Custom Models",
+        SubTitle: "Custom model options, seperated by comma",
+      },
+      Google: {
+        ApiKey: {
+          Title: "API Key",
+          SubTitle: "Obtain your API Key from Google AI",
+          Placeholder: "Enter your Google AI Studio API Key",
+        },
+
+        Endpoint: {
+          Title: "Endpoint Address",
+          SubTitle: "Example: ",
+        },
+
+        ApiVersion: {
+          Title: "API Version (specific to gemini-pro)",
+          SubTitle: "Select a specific API version",
+        },
+        GoogleSafetySettings: {
+          Title: "Google Safety Settings",
+          SubTitle: "Select a safety filtering level",
+        },
+      },
     },
-    Endpoint: {
-      Title: "Endpoint",
-      SubTitle: "Custom endpoint must start with http(s)://",
-    },
+
     Model: "Model",
     Temperature: {
       Title: "Temperature",
@@ -249,7 +502,7 @@ const en: LocaleType = {
       History: (content: string) =>
         "This is a summary of the chat history as a recap: " + content,
       Topic:
-        "Please generate a four to five word title summarizing our conversation without any lead-in, punctuation, quotation marks, periods, symbols, or additional text. Remove enclosing quotation marks.",
+        "Please generate a four to five word title summarizing our conversation without any lead-in, punctuation, quotation marks, periods, symbols, bold text, or additional text. Remove enclosing quotation marks.",
       Summarize:
         "Summarize the discussion briefly in 200 words or less to use as a prompt for future context.",
     },
@@ -257,6 +510,10 @@ const en: LocaleType = {
   Copy: {
     Success: "Copied to clipboard",
     Failed: "Copy failed, please grant permission to access clipboard",
+  },
+  Download: {
+    Success: "Content downloaded to your directory.",
+    Failed: "Download failed.",
   },
   Context: {
     Toast: (x: any) => `With ${x} contextual prompts`,
@@ -267,6 +524,13 @@ const en: LocaleType = {
   },
   Plugin: {
     Name: "Plugin",
+    Artifacts: "Artifacts",
+  },
+  Discovery: {
+    Name: "Discovery",
+  },
+  FineTuned: {
+    Sysmessage: "You are an assistant that",
   },
   Mask: {
     Name: "Mask",
@@ -302,6 +566,11 @@ const en: LocaleType = {
         Title: "Hide Context Prompts",
         SubTitle: "Do not show in-context prompts in chat",
       },
+      Share: {
+        Title: "Share This Mask",
+        SubTitle: "Generate a link to this mask",
+        Action: "Copy Link",
+      },
     },
   },
   NewChat: {
@@ -320,12 +589,78 @@ const en: LocaleType = {
     Close: "Close",
     Create: "Create",
     Edit: "Edit",
+    Export: "Export",
+    Import: "Import",
+    Sync: "Sync",
+    Config: "Config",
   },
   Exporter: {
+    Description: {
+      Title: "Only messages after clearing the context will be displayed",
+    },
     Model: "Model",
     Messages: "Messages",
     Topic: "Topic",
     Time: "Time",
+  },
+  URLCommand: {
+    Code: "Detected access code from url, confirm to apply? ",
+    Settings: "Detected settings from url, confirm to apply?",
+  },
+  SdPanel: {
+    Prompt: "Prompt",
+    NegativePrompt: "Negative Prompt",
+    PleaseInput: (name: string) => `Please input ${name}`,
+    AspectRatio: "Aspect Ratio",
+    ImageStyle: "Image Style",
+    OutFormat: "Output Format",
+    AIModel: "AI Model",
+    ModelVersion: "Model Version",
+    Submit: "Submit",
+    ParamIsRequired: (name: string) => `${name} is required`,
+    Styles: {
+      D3Model: "3d-model",
+      AnalogFilm: "analog-film",
+      Anime: "anime",
+      Cinematic: "cinematic",
+      ComicBook: "comic-book",
+      DigitalArt: "digital-art",
+      Enhance: "enhance",
+      FantasyArt: "fantasy-art",
+      Isometric: "isometric",
+      LineArt: "line-art",
+      LowPoly: "low-poly",
+      ModelingCompound: "modeling-compound",
+      NeonPunk: "neon-punk",
+      Origami: "origami",
+      Photographic: "photographic",
+      PixelArt: "pixel-art",
+      TileTexture: "tile-texture",
+    },
+  },
+  Sd: {
+    SubTitle: (count: number) => `${count} images`,
+    Actions: {
+      Params: "See Params",
+      Copy: "Copy Prompt",
+      Delete: "Delete",
+      Retry: "Retry",
+      ReturnHome: "Return Home",
+      History: "History",
+    },
+    EmptyRecord: "No images yet",
+    Status: {
+      Name: "Status",
+      Success: "Success",
+      Error: "Error",
+      Wait: "Waiting",
+      Running: "Running",
+    },
+    Danger: {
+      Delete: "Confirm to delete?",
+    },
+    GenerateParams: "Generate Params",
+    Detail: "Detail",
   },
 };
 

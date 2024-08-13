@@ -1,18 +1,23 @@
+import { getClientConfig } from "../config/client";
 import { SubmitKey } from "../store/config";
 
 const wx_pic_url =
   "https://p2.a.yximgs.com/upic/2023/06/15/16/BMjAyMzA2MTUxNjI5MzlfMjEwMzA1ODgxNl8xMDU1ODQzNDQ2MTJfMl82_Bbbf4223a3cc9af4d26def37ebca45bbf.jpg";
+const isApp = !!getClientConfig()?.isApp;
+
 const cn = {
   WIP: "该功能仍在开发中……",
   Error: {
-    Unauthorized:
-      "访问密码不正确或为空，请前往[登录](/#/auth)页输入正确的访问密码，或者在[设置](/#/settings)页填入你自己的 OpenAI API Key。\n\n***关注公众号获取密码***\n\n![微信公号二维码](" +
-      wx_pic_url +
-      ")",
+    Unauthorized: isApp
+      ? "检测到无效 API Key，请前往[设置](/#/settings)页检查 API Key 是否配置正确。"
+      : "访问密码不正确或为空，请前往[登录](/#/auth)页输入正确的访问密码，或者在[设置](/#/settings)页填入你自己的 OpenAI API Key。\n\n***关注公众号获取密码***\n\n![微信公号二维码](" +
+        wx_pic_url +
+        ")",
   },
   Auth: {
     Title: "需要密码",
     Tips: "管理员开启了密码验证，请在下方填入访问码",
+    SubTips: "或者输入你的 OpenAI 或 Google API 密钥",
     Input: "在此处填写访问码",
     Confirm: "确认",
     Later: "稍后再说",
@@ -22,6 +27,13 @@ const cn = {
   },
   Chat: {
     SubTitle: (count: number) => `共 ${count} 条对话`,
+    EditMessage: {
+      Title: "编辑消息记录",
+      Topic: {
+        Title: "聊天主题",
+        SubTitle: "更改当前聊天主题",
+      },
+    },
     Actions: {
       ChatList: "查看消息列表",
       CompressedHistory: "查看压缩后的历史 Prompt",
@@ -30,10 +42,11 @@ const cn = {
       Stop: "停止",
       Retry: "重试",
       Pin: "固定",
-      PinToastContent: "已将 2 条对话固定至预设提示词",
+      PinToastContent: "已将 1 条对话固定至预设提示词",
       PinToastAction: "查看",
       Delete: "删除",
       Edit: "编辑",
+      FullScreen: "全屏",
     },
     Commands: {
       new: "新建聊天",
@@ -55,6 +68,7 @@ const cn = {
       Masks: "所有面具",
       Clear: "清除聊天",
       Settings: "对话设置",
+      UploadImage: "上传图片",
     },
     Rename: "重命名对话",
     Typing: "正在输入…",
@@ -70,14 +84,15 @@ const cn = {
       Reset: "清除记忆",
       SaveAs: "存为面具",
     },
+    IsContext: "预设提示词",
   },
   Export: {
     Title: "分享聊天记录",
     Copy: "全部复制",
     Download: "下载文件",
     Share: "分享到 ShareGPT",
-    MessageFromYou: "来自你的消息",
-    MessageFromChatGPT: "来自 ChatGPT 的消息",
+    MessageFromYou: "用户",
+    MessageFromChatGPT: "ChatGPT",
     Format: {
       Title: "导出格式",
       SubTitle: "可以导出 Markdown 文本或者 PNG 图片",
@@ -89,6 +104,14 @@ const cn = {
     Steps: {
       Select: "选取",
       Preview: "预览",
+    },
+    Image: {
+      Toast: "正在生成截图",
+      Modal: "长按或右键保存图片",
+    },
+    Artifacts: {
+      Title: "分享页面",
+      Error: "分享失败",
     },
   },
   Select: {
@@ -114,6 +137,7 @@ const cn = {
   Settings: {
     Title: "设置",
     SubTitle: "所有设置选项",
+    ShowPassword: "显示密码",
 
     Danger: {
       Reset: {
@@ -138,7 +162,15 @@ const cn = {
       Title: "字体大小",
       SubTitle: "聊天内容的字体大小",
     },
-
+    FontFamily: {
+      Title: "聊天字体",
+      SubTitle: "聊天内容的字体，若置空则应用全局默认字体",
+      Placeholder: "字体名称",
+    },
+    InjectSystemPrompts: {
+      Title: "注入系统级提示信息",
+      SubTitle: "强制给每次请求的消息列表开头添加一个模拟 ChatGPT 的系统提示",
+    },
     InputTemplate: {
       Title: "用户输入预处理",
       SubTitle: "用户最新的一条消息会填充到此模板",
@@ -159,9 +191,62 @@ const cn = {
       Title: "预览气泡",
       SubTitle: "在预览气泡中预览 Markdown 内容",
     },
+    AutoGenerateTitle: {
+      Title: "自动生成标题",
+      SubTitle: "根据对话内容生成合适的标题",
+    },
+    Sync: {
+      CloudState: "云端数据",
+      NotSyncYet: "还没有进行过同步",
+      Success: "同步成功",
+      Fail: "同步失败",
+
+      Config: {
+        Modal: {
+          Title: "配置云同步",
+          Check: "检查可用性",
+        },
+        SyncType: {
+          Title: "同步类型",
+          SubTitle: "选择喜爱的同步服务器",
+        },
+        Proxy: {
+          Title: "启用代理",
+          SubTitle: "在浏览器中同步时，必须启用代理以避免跨域限制",
+        },
+        ProxyUrl: {
+          Title: "代理地址",
+          SubTitle: "仅适用于本项目自带的跨域代理",
+        },
+
+        WebDav: {
+          Endpoint: "WebDAV 地址",
+          UserName: "用户名",
+          Password: "密码",
+        },
+
+        UpStash: {
+          Endpoint: "UpStash Redis REST Url",
+          UserName: "备份名称",
+          Password: "UpStash Redis REST Token",
+        },
+      },
+
+      LocalState: "本地数据",
+      Overview: (overview: any) => {
+        return `${overview.chat} 次对话，${overview.message} 条消息，${overview.prompt} 条提示词，${overview.mask} 个面具`;
+      },
+      ImportFailed: "导入失败",
+    },
     Mask: {
-      Title: "面具启动页",
-      SubTitle: "新建聊天时，展示面具启动页",
+      Splash: {
+        Title: "面具启动页",
+        SubTitle: "新建聊天时，展示面具启动页",
+      },
+      Builtin: {
+        Title: "隐藏内置面具",
+        SubTitle: "在所有面具列表中隐藏内置面具",
+      },
     },
     Prompt: {
       Disable: {
@@ -189,11 +274,6 @@ const cn = {
       Title: "历史消息长度压缩阈值",
       SubTitle: "当未压缩的历史消息超过该值时，将进行压缩",
     },
-    Token: {
-      Title: "API Key",
-      SubTitle: "使用自己的 Key 可绕过密码访问限制",
-      Placeholder: "OpenAI API Key",
-    },
 
     Usage: {
       Title: "余额查询",
@@ -204,15 +284,186 @@ const cn = {
       Check: "重新检查",
       NoAccess: "输入 API Key 或访问密码查看余额",
     },
-    AccessCode: {
-      Title: "访问密码",
-      SubTitle: "管理员已开启加密访问",
-      Placeholder: "请输入访问密码",
+
+    Access: {
+      AccessCode: {
+        Title: "访问密码",
+        SubTitle: "管理员已开启加密访问",
+        Placeholder: "请输入访问密码",
+      },
+      CustomEndpoint: {
+        Title: "自定义接口",
+        SubTitle: "是否使用自定义 Azure 或 OpenAI 服务",
+      },
+      Provider: {
+        Title: "模型服务商",
+        SubTitle: "切换不同的服务商",
+      },
+      OpenAI: {
+        ApiKey: {
+          Title: "API Key",
+          SubTitle: "使用自定义 OpenAI Key 绕过密码访问限制",
+          Placeholder: "OpenAI API Key",
+        },
+
+        Endpoint: {
+          Title: "接口地址",
+          SubTitle: "除默认地址外，必须包含 http(s)://",
+        },
+      },
+      Azure: {
+        ApiKey: {
+          Title: "接口密钥",
+          SubTitle: "使用自定义 Azure Key 绕过密码访问限制",
+          Placeholder: "Azure API Key",
+        },
+
+        Endpoint: {
+          Title: "接口地址",
+          SubTitle: "样例：",
+        },
+
+        ApiVerion: {
+          Title: "接口版本 (azure api version)",
+          SubTitle: "选择指定的部分版本",
+        },
+      },
+      Anthropic: {
+        ApiKey: {
+          Title: "接口密钥",
+          SubTitle: "使用自定义 Anthropic Key 绕过密码访问限制",
+          Placeholder: "Anthropic API Key",
+        },
+
+        Endpoint: {
+          Title: "接口地址",
+          SubTitle: "样例：",
+        },
+
+        ApiVerion: {
+          Title: "接口版本 (claude api version)",
+          SubTitle: "选择一个特定的 API 版本输入",
+        },
+      },
+      Google: {
+        ApiKey: {
+          Title: "API 密钥",
+          SubTitle: "从 Google AI 获取您的 API 密钥",
+          Placeholder: "输入您的 Google AI Studio API 密钥",
+        },
+
+        Endpoint: {
+          Title: "终端地址",
+          SubTitle: "示例：",
+        },
+
+        ApiVersion: {
+          Title: "API 版本（仅适用于 gemini-pro）",
+          SubTitle: "选择一个特定的 API 版本",
+        },
+        GoogleSafetySettings: {
+          Title: "Google 安全过滤级别",
+          SubTitle: "设置内容过滤级别",
+        },
+      },
+      Baidu: {
+        ApiKey: {
+          Title: "API Key",
+          SubTitle: "使用自定义 Baidu API Key",
+          Placeholder: "Baidu API Key",
+        },
+        SecretKey: {
+          Title: "Secret Key",
+          SubTitle: "使用自定义 Baidu Secret Key",
+          Placeholder: "Baidu Secret Key",
+        },
+        Endpoint: {
+          Title: "接口地址",
+          SubTitle: "不支持自定义前往.env配置",
+        },
+      },
+      Tencent: {
+        ApiKey: {
+          Title: "API Key",
+          SubTitle: "使用自定义腾讯云API Key",
+          Placeholder: "Tencent API Key",
+        },
+        SecretKey: {
+          Title: "Secret Key",
+          SubTitle: "使用自定义腾讯云Secret Key",
+          Placeholder: "Tencent Secret Key",
+        },
+        Endpoint: {
+          Title: "接口地址",
+          SubTitle: "不支持自定义前往.env配置",
+        },
+      },
+      ByteDance: {
+        ApiKey: {
+          Title: "接口密钥",
+          SubTitle: "使用自定义 ByteDance API Key",
+          Placeholder: "ByteDance API Key",
+        },
+        Endpoint: {
+          Title: "接口地址",
+          SubTitle: "样例：",
+        },
+      },
+      Alibaba: {
+        ApiKey: {
+          Title: "接口密钥",
+          SubTitle: "使用自定义阿里云API Key",
+          Placeholder: "Alibaba Cloud API Key",
+        },
+        Endpoint: {
+          Title: "接口地址",
+          SubTitle: "样例：",
+        },
+      },
+      Moonshot: {
+        ApiKey: {
+          Title: "接口密钥",
+          SubTitle: "使用自定义月之暗面API Key",
+          Placeholder: "Moonshot API Key",
+        },
+        Endpoint: {
+          Title: "接口地址",
+          SubTitle: "样例：",
+        },
+      },
+      Stability: {
+        ApiKey: {
+          Title: "接口密钥",
+          SubTitle: "使用自定义 Stability API Key",
+          Placeholder: "Stability API Key",
+        },
+        Endpoint: {
+          Title: "接口地址",
+          SubTitle: "样例：",
+        },
+      },
+      Iflytek: {
+        ApiKey: {
+          Title: "ApiKey",
+          SubTitle: "从讯飞星火控制台获取的 APIKey",
+          Placeholder: "APIKey",
+        },
+        ApiSecret: {
+          Title: "ApiSecret",
+          SubTitle: "从讯飞星火控制台获取的 APISecret",
+          Placeholder: "APISecret",
+        },
+        Endpoint: {
+          Title: "接口地址",
+          SubTitle: "样例：",
+        },
+      },
+      CustomModel: {
+        Title: "自定义模型名",
+        SubTitle: "增加自定义模型可选项，使用英文逗号隔开",
+      },
     },
-    Endpoint: {
-      Title: "接口地址",
-      SubTitle: "除默认地址外，必须包含 http(s)://",
-    },
+
     Model: "模型 (model)",
     Temperature: {
       Title: "随机性 (temperature)",
@@ -242,7 +493,7 @@ const cn = {
     Prompt: {
       History: (content: string) => "这是历史聊天总结作为前情提要：" + content,
       Topic:
-        "使用四到五个字直接返回这句话的简要主题，不要解释、不要标点、不要语气词、不要多余文本，如果没有主题，请直接返回“闲聊”",
+        "使用四到五个字直接返回这句话的简要主题，不要解释、不要标点、不要语气词、不要多余文本，不要加粗，如果没有主题，请直接返回“闲聊”",
       Summarize:
         "简要总结一下对话内容，用作后续的上下文提示 prompt，控制在 200 字以内",
     },
@@ -251,15 +502,26 @@ const cn = {
     Success: "已写入剪切板",
     Failed: "复制失败，请赋予剪切板权限",
   },
+  Download: {
+    Success: "内容已下载到您的目录。",
+    Failed: "下载失败。",
+  },
   Context: {
     Toast: (x: any) => `包含 ${x} 条预设提示词`,
     Edit: "当前对话设置",
-    Add: "新增预设对话",
+    Add: "新增一条对话",
     Clear: "上下文已清除",
     Revert: "恢复上下文",
   },
   Plugin: {
     Name: "插件",
+    Artifacts: "Artifacts",
+  },
+  Discovery: {
+    Name: "发现",
+  },
+  FineTuned: {
+    Sysmessage: "你是一个助手",
   },
   Mask: {
     Name: "面具",
@@ -295,6 +557,11 @@ const cn = {
         Title: "隐藏预设对话",
         SubTitle: "隐藏后预设对话不会出现在聊天界面",
       },
+      Share: {
+        Title: "分享此面具",
+        SubTitle: "生成此面具的直达链接",
+        Action: "复制链接",
+      },
     },
   },
   NewChat: {
@@ -307,18 +574,85 @@ const cn = {
     More: "查看全部",
   },
 
+  URLCommand: {
+    Code: "检测到链接中已经包含访问码，是否自动填入？",
+    Settings: "检测到链接中包含了预制设置，是否自动填入？",
+  },
+
   UI: {
     Confirm: "确认",
     Cancel: "取消",
     Close: "关闭",
     Create: "新建",
     Edit: "编辑",
+    Export: "导出",
+    Import: "导入",
+    Sync: "同步",
+    Config: "配置",
   },
   Exporter: {
+    Description: {
+      Title: "只有清除上下文之后的消息会被展示",
+    },
     Model: "模型",
     Messages: "消息",
     Topic: "主题",
     Time: "时间",
+  },
+  SdPanel: {
+    Prompt: "画面提示",
+    NegativePrompt: "否定提示",
+    PleaseInput: (name: string) => `请输入${name}`,
+    AspectRatio: "横纵比",
+    ImageStyle: "图像风格",
+    OutFormat: "输出格式",
+    AIModel: "AI模型",
+    ModelVersion: "模型版本",
+    Submit: "提交生成",
+    ParamIsRequired: (name: string) => `${name}不能为空`,
+    Styles: {
+      D3Model: "3D模型",
+      AnalogFilm: "模拟电影",
+      Anime: "动漫",
+      Cinematic: "电影风格",
+      ComicBook: "漫画书",
+      DigitalArt: "数字艺术",
+      Enhance: "增强",
+      FantasyArt: "幻想艺术",
+      Isometric: "等角",
+      LineArt: "线描",
+      LowPoly: "低多边形",
+      ModelingCompound: "建模材料",
+      NeonPunk: "霓虹朋克",
+      Origami: "折纸",
+      Photographic: "摄影",
+      PixelArt: "像素艺术",
+      TileTexture: "贴图",
+    },
+  },
+  Sd: {
+    SubTitle: (count: number) => `共 ${count} 条绘画`,
+    Actions: {
+      Params: "查看参数",
+      Copy: "复制提示词",
+      Delete: "删除",
+      Retry: "重试",
+      ReturnHome: "返回首页",
+      History: "查看历史",
+    },
+    EmptyRecord: "暂无绘画记录",
+    Status: {
+      Name: "状态",
+      Success: "成功",
+      Error: "失败",
+      Wait: "等待中",
+      Running: "运行中",
+    },
+    Danger: {
+      Delete: "确认删除？",
+    },
+    GenerateParams: "生成参数",
+    Detail: "详情",
   },
 };
 
