@@ -3,7 +3,6 @@ import {
   BAIDU_BASE_URL,
   ApiPath,
   ModelProvider,
-  BAIDU_OATUH_URL,
   ServiceProvider,
 } from "@/app/constant";
 import { prettyObject } from "@/app/utils/format";
@@ -70,9 +69,12 @@ async function request(req: NextRequest) {
   console.log("[Proxy] ", path);
   console.log("[Base Url]", baseUrl);
 
-  const timeoutId = setTimeout(() => {
-    controller.abort();
-  }, 10 * 60 * 1000);
+  const timeoutId = setTimeout(
+    () => {
+      controller.abort();
+    },
+    10 * 60 * 1000,
+  );
 
   const { access_token } = await getAccessToken(
     serverConfig.baiduApiKey as string,

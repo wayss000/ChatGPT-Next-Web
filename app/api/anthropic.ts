@@ -3,7 +3,6 @@ import {
   ANTHROPIC_BASE_URL,
   Anthropic,
   ApiPath,
-  DEFAULT_MODELS,
   ServiceProvider,
   ModelProvider,
 } from "@/app/constant";
@@ -84,9 +83,12 @@ async function request(req: NextRequest) {
   console.log("[Proxy] ", path);
   console.log("[Base Url]", baseUrl);
 
-  const timeoutId = setTimeout(() => {
-    controller.abort();
-  }, 10 * 60 * 1000);
+  const timeoutId = setTimeout(
+    () => {
+      controller.abort();
+    },
+    10 * 60 * 1000,
+  );
 
   // try rebuild url, when using cloudflare ai gateway in server
   const fetchUrl = cloudflareAIGatewayUrl(`${baseUrl}${path}`);
@@ -95,6 +97,7 @@ async function request(req: NextRequest) {
     headers: {
       "Content-Type": "application/json",
       "Cache-Control": "no-store",
+      "anthropic-dangerous-direct-browser-access": "true",
       [authHeaderName]: authValue,
       "anthropic-version":
         req.headers.get("anthropic-version") ||

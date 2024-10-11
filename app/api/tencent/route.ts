@@ -1,15 +1,8 @@
 import { getServerSideConfig } from "@/app/config/server";
-import {
-  TENCENT_BASE_URL,
-  ApiPath,
-  ModelProvider,
-  ServiceProvider,
-  Tencent,
-} from "@/app/constant";
+import { TENCENT_BASE_URL, ModelProvider } from "@/app/constant";
 import { prettyObject } from "@/app/utils/format";
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/app/api/auth";
-import { isModelAvailableInServer } from "@/app/utils/model";
 import { getHeader } from "@/app/utils/tencent";
 
 const serverConfig = getServerSideConfig();
@@ -79,9 +72,12 @@ async function request(req: NextRequest) {
 
   console.log("[Base Url]", baseUrl);
 
-  const timeoutId = setTimeout(() => {
-    controller.abort();
-  }, 10 * 60 * 1000);
+  const timeoutId = setTimeout(
+    () => {
+      controller.abort();
+    },
+    10 * 60 * 1000,
+  );
 
   const fetchUrl = baseUrl;
 

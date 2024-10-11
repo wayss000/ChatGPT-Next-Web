@@ -1,6 +1,5 @@
 import { getServerSideConfig } from "@/app/config/server";
 import {
-  Iflytek,
   IFLYTEK_BASE_URL,
   ApiPath,
   ModelProvider,
@@ -10,7 +9,6 @@ import { prettyObject } from "@/app/utils/format";
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/app/api/auth";
 import { isModelAvailableInServer } from "@/app/utils/model";
-import type { RequestPayload } from "@/app/client/platforms/openai";
 // iflytek
 
 const serverConfig = getServerSideConfig();
@@ -60,9 +58,12 @@ async function request(req: NextRequest) {
   console.log("[Proxy] ", path);
   console.log("[Base Url]", baseUrl);
 
-  const timeoutId = setTimeout(() => {
-    controller.abort();
-  }, 10 * 60 * 1000);
+  const timeoutId = setTimeout(
+    () => {
+      controller.abort();
+    },
+    10 * 60 * 1000,
+  );
 
   const fetchUrl = `${baseUrl}${path}`;
   const fetchOptions: RequestInit = {
